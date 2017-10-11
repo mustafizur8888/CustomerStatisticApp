@@ -1,35 +1,52 @@
-﻿var ctx = document.getElementById('myChart').getContext('2d');
-var chart = new Chart(ctx, {
-    // The type of chart we want to create
-    type: 'horizontalBar',
-    // The data for our dataset
-    data: {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
-        datasets: [
-            {
-                label: "AAAA",
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data: [12, 10, 5, 2, 20, 30, 45]
-            },
-            {
-                label: "121",
-                backgroundColor: '#4EA0AB',
-                borderColor: 'rgb(255, 99, 132)',
-                data: [12, 10, 5, 2, 20, 30, 45]
-            }
-        ]
-    },
+﻿function plotChart(canvasID, data) {
 
-    // Configuration options go here
-    options: {
-        scales: {
-            xAxes: [{
-                stacked: true
-            }],
-            yAxes: [{
-                stacked: true
-            }]
-        }
-    }
-});
+
+    var ctx = document.getElementById(canvasID).getContext('2d');
+    var chart = new Chart(ctx,
+        {
+            // The type of chart we want to create
+            type: 'horizontalBar',
+            // The data for our dataset
+            data: {
+
+                labels: data.Product.map(function (a) { return a.ProductName; }),
+                datasets: [
+                    {
+                        label: data.Region,
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: data.Product.map(function (a) { return a.TotalQuantity; })
+                    },
+                    {
+                        label: "Rating",
+                        backgroundColor: '#4EA0AB',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: data.Product.map(function (a) { return a.avg_rating; })
+                    }
+                ]
+            },
+
+            // Configuration options go here
+            options: {
+                scales: {
+                    xAxes: [
+                        {
+                            stacked: true,
+
+                        }
+                    ],
+                    yAxes: [
+                        {
+                            stacked: true,
+                            ticks: {
+                                beginAtZero: true,
+                                min: 10,
+                                suggestedMin: 0
+                            }
+                        }
+                    ]
+                }
+            }
+        });
+
+}

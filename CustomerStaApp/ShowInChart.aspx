@@ -32,30 +32,31 @@
         </div>
     </div>
 
-
+    <br />
+    <br />
     <div class="row">
-        <div class="col-md-4 col-sm-4 col-lg-4">
-            <canvas id="myChart"></canvas>
+        <div id="plotChart" >
+          
         </div>
     </div>
 
 
-    <script src="Scripts/ChartJs/AppChart.js"></script>
+   <script src="Scripts/ChartJs/AppChart.js"></script>
 
     <script>
 
         var array = [];
         var Monetary = '';
-        var Recency ='';
+        var Recency = '';
         var Frequency = '';
 
 
         function intializeValue() {
-             Monetary = $('#txtMonetary').val();
-             Recency = $('#txtRecency').val();
-             Frequency = $('#txtFrequency').val();
+            Monetary = $('#txtMonetary').val();
+            Recency = $('#txtRecency').val();
+            Frequency = $('#txtFrequency').val();
         }
-     
+
 
 
         function getRegionList() {
@@ -129,14 +130,14 @@
 
                 var idx = $.inArray($(this).parent().text(), array);
                 if (idx == -1) {
-                    array.push( $(this).parent().text());
+                    array.push($(this).parent().text());
                 } else {
                     array.splice(idx, 1);
                 }
                 console.log(array);
             });
 
-          
+
         }
         function getChartData() {
             //$.ajax({
@@ -155,9 +156,30 @@
                 dataType: "json",
                 responseType: "json",
                 data: JSON.stringify(array),
-                success:function(data) { alert('data: ' + data); }
+                success: chartData
             });
+            function chartData(data) {
+                console.log(data);
 
+               
+                $('#plotChart').empty();
+                //  var obj = jQuery.parseJSON(data);
+                $.each(data, function () {
+                    console.log(this);
+                   
+                    var $container = $("#plotChart");
+                    var id = $container.children().length + 1;
+                    var chartid = 'chart' + id;
+                    var rowDiv = '';
+                    var closeDiv = '';
+                    
+                    $container.append('<div id="chartdiv' + id + '" class="col-md-8 col-lg-8 col-sm-8 col-md-offset-2 col-lg-offset-2 col-sm-offset-2"> <canvas id="chart' + id + '" width="90%"></canvas></div><br/><br/>' );
+                  
+                    plotChart(chartid, this);
+                });
+
+
+            }
             return false;
         };
     </script>

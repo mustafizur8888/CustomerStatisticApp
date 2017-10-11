@@ -57,7 +57,9 @@ namespace CustomerStaApp.Handler
 
 
             DataSet dataSet = db.GetDataSet("spGetChartData", list);
-            string jsonNet = DataTableToJSONWithJSONNet(dataSet.Tables[0]);
+
+
+            string jsonNet = dataSet.Tables[0].Rows[0][0].ToString();
             context.Response.Write(jsonNet);
         }
 
