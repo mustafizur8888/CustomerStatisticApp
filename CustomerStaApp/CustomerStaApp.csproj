@@ -45,6 +45,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -62,7 +65,11 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Handler\GetChartRegionNamehandler.ashx" />
+    <Content Include="Handler\ChartData.ashx" />
     <None Include="packages.config" />
+    <Content Include="Scripts\ChartJs\AppChart.js" />
+    <Content Include="ShowInChart.aspx" />
     <Content Include="Site.Master" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
@@ -118,6 +125,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Handler\ChartData.ashx.cs">
+      <DependentUpon>ChartData.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\GetChartRegionNamehandler.ashx.cs">
+      <DependentUpon>GetChartRegionNamehandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Satisfation_Rate_Generation.aspx.cs">
       <DependentUpon>Satisfation_Rate_Generation.aspx</DependentUpon>
@@ -125,6 +138,13 @@
     </Compile>
     <Compile Include="Satisfation_Rate_Generation.aspx.designer.cs">
       <DependentUpon>Satisfation_Rate_Generation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShowInChart.aspx.cs">
+      <DependentUpon>ShowInChart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ShowInChart.aspx.designer.cs">
+      <DependentUpon>ShowInChart.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
