@@ -19,6 +19,7 @@ namespace CustomerStaApp.Handler
             string Recency = context.Request.QueryString["Recency"];
             string Frequency = context.Request.QueryString["Frequency"];
             string Monetary = context.Request.QueryString["Monetary"];
+            string chartTpe = context.Request.QueryString["chartTpe"];
 
 
             Db db = new Db();
@@ -39,12 +40,18 @@ namespace CustomerStaApp.Handler
                 {
                     ParameterName = "@Monetary",
                     Value = Monetary
-                }
+                },
+                new SqlParameter
+                {
+                    ParameterName = "@chartTpe",
+                    Value = chartTpe
+                },
             };
 
+           
 
             DataSet dataSet = db.GetDataSet("spGetChartRegionName", list);
-            string jsonNet = DataTableToJSONWithJSONNet(dataSet.Tables[0]);
+            string jsonNet = DataTableToJsonWithJsonNet(dataSet.Tables[0]);
             context.Response.Write(jsonNet);
         }
 
@@ -56,11 +63,10 @@ namespace CustomerStaApp.Handler
             }
         }
 
-        public string DataTableToJSONWithJSONNet(DataTable table)
+        public string DataTableToJsonWithJsonNet(DataTable table)
         {
-            string JSONString = string.Empty;
-            JSONString = JsonConvert.SerializeObject(table); 
-            return JSONString;
+            var jsonString = JsonConvert.SerializeObject(table);
+            return jsonString;
         }
     }
 }

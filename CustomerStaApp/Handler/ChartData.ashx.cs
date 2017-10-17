@@ -24,6 +24,7 @@ namespace CustomerStaApp.Handler
             string Recency = context.Request.QueryString["Recency"];
             string Frequency = context.Request.QueryString["Frequency"];
             string Monetary = context.Request.QueryString["Monetary"];
+            string chartTpe = context.Request.QueryString["chartTpe"];
 
             string json = new StreamReader(context.Request.InputStream).ReadToEnd();
 
@@ -49,8 +50,13 @@ namespace CustomerStaApp.Handler
                 }
                 ,new SqlParameter
                 {
-                    ParameterName="@RegionNames",
+                    ParameterName="@ChartTitle",
                     Value = json.Replace("[",string.Empty).Replace("]",string.Empty).Replace("\"",string.Empty)
+                },
+                new SqlParameter
+                {
+                    ParameterName="@chartTpe",
+                    Value = chartTpe
                 }
 
             };

@@ -3,8 +3,23 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <link href="Content/font-awesome.min.css" rel="stylesheet" />
+
     <div class="row">
-        <div class="col-md-8 form-inline">
+        <div class="col-md-8 col-sm-8 col-lg-8 col-md-offset-2 col-lg-offset-2 col-sm-offset-2">
+            <label class="radio-inline">
+                <input type="radio" value="region" name="chartType">Region wise
+            </label>
+            <label class="radio-inline">
+                <input type="radio" value="age" name="chartType">Age
+            </label>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="row">
+
+        <div class="col-md-12 col-sm-12 col-lg-12 form-inline">
             <div class="form-group">
                 <label for="txtRecency">Recency:</label>
                 <input id="txtRecency" type="text" class="form-control" placeholder="Recency" />
@@ -19,7 +34,7 @@
                 <input id="txtMonetary" type="text" class="form-control" placeholder="Recency" />
 
             </div>
-            <button class="btn btn-default" onclick="return getRegionList()">Get Region List</button>
+            <button class="btn btn-default" onclick="return getChartTitleList()">Get Title List</button>
         </div>
     </div>
     <div class="row" id="chartConfig" style="display: none">
@@ -29,19 +44,19 @@
         </div>
         <div class="col-md-12">
             <button class="btn btn-default" onclick="return getChartData()">Plot Chart</button>
+            <span id="spanLOding"><i class="fa fa-spinner fa-spin" aria-hidden="true" style="font-size: 24px"></i></span>
         </div>
     </div>
 
     <br />
     <br />
     <div class="row">
-        <div id="plotChart" >
-          
+        <div id="plotChart">
         </div>
     </div>
 
 
-   <script src="Scripts/ChartJs/AppChart.js"></script>
+    <script src="Scripts/ChartJs/AppChart.js"></script>
 
     <script>
 
@@ -49,17 +64,24 @@
         var Monetary = '';
         var Recency = '';
         var Frequency = '';
+        var chartTpe = '';
 
+        $(document).ready(function () {
+            $('#spanLOding').hide();
+
+        });
 
         function intializeValue() {
             Monetary = $('#txtMonetary').val();
             Recency = $('#txtRecency').val();
             Frequency = $('#txtFrequency').val();
+            chartTpe = $("input:radio[name=chartType]:checked").val();
+            console.log(chartTpe);
         }
 
 
 
-        function getRegionList() {
+        function getChartTitleList() {
 
             intializeValue();
 
@@ -68,16 +90,16 @@
             console.log(Frequency);
 
             $.ajax({
-                url: "Handler/GetChartRegionNamehandler.ashx?Recency=" + Recency + "&Frequency=" + Frequency + "&Monetary=" + Monetary,
+                url: "Handler/GetChartRegionNamehandler.ashx?Recency=" + Recency + "&Frequency=" + Frequency + "&Monetary=" + Monetary + "&chartTpe=" + chartTpe,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 responseType: "json",
-                success: OnComplete
+                success: onComplete
             });
 
-            function OnComplete(Registration) {
-                console.log(Registration);
-                CreateCheckBoxList(Registration);
+            function onComplete(registration) {
+                console.log(registration);
+                CreateCheckBoxList(registration);
             }
 
             return false;
@@ -92,13 +114,13 @@
 
                 var label = $('<label class="checkbox-inline"> </label>').attr({
                     for: 'chklistitem' + counter++
-                }).text(this.Region);
+                }).text(this.Title);
 
                 var chec = $('<input>').attr({
                     type: 'checkbox',
                     name: 'chklistitem',
                     value: this.Value,
-                    id: 'chklistitem' + counter,
+                    id: 'chklistitem' + counter
 
 
                 });
@@ -147,34 +169,40 @@
             //    responseType: "json",
             //    success: function (data) { alert('data: ' + data); }
             //});
+            $('#spanLOding').show();
             intializeValue();
             console.log('click');
             $.ajax({
-                url: "Handler/ChartData.ashx?Recency=" + Recency + "&Frequency=" + Frequency + "&Monetary=" + Monetary,
+                url: "Handler/ChartData.ashx?Recency=" + Recency + "&Frequency=" + Frequency + "&Monetary=" + Monetary + "&chartTpe=" + chartTpe,
                 type: 'POST',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 responseType: "json",
                 data: JSON.stringify(array),
-                success: chartData
+                success: chartData,
+                error: function () {
+                    $('#spanLOding').hide();
+                    $('#plotChart').empty();
+                }
             });
             function chartData(data) {
-                console.log(data);
 
-               
+                $('#spanLOding').hide();
+
+
                 $('#plotChart').empty();
                 //  var obj = jQuery.parseJSON(data);
                 $.each(data, function () {
-                    console.log(this);
-                   
+                    console.log(this.Title);
+
                     var $container = $("#plotChart");
                     var id = $container.children().length + 1;
                     var chartid = 'chart' + id;
                     var rowDiv = '';
                     var closeDiv = '';
-                    
-                    $container.append('<div id="chartdiv' + id + '" class="col-md-8 col-lg-8 col-sm-8 col-md-offset-2 col-lg-offset-2 col-sm-offset-2"> <canvas id="chart' + id + '" width="90%"></canvas></div><br/><br/>' );
-                  
+
+                    $container.append('<div id="chartdiv' + id + '" class="col-md-8 col-lg-8 col-sm-8 col-md-offset-2 col-lg-offset-2 col-sm-offset-2"> <canvas id="chart' + id + '" width="90%"></canvas></div><br/><br/>');
+
                     plotChart(chartid, this);
                 });
 
