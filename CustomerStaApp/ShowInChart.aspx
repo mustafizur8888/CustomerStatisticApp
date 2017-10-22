@@ -6,7 +6,7 @@
     <link href="Content/font-awesome.min.css" rel="stylesheet" />
 
     <div class="row">
-        <div class="col-md-8 col-sm-8 col-lg-8 col-md-offset-2 col-lg-offset-2 col-sm-offset-2">
+        <div class="col-md-8 col-sm-8 col-lg-8 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 text-center">
             <label class="radio-inline">
                 <input type="radio" value="region" name="chartType">Region wise
             </label>
@@ -19,7 +19,7 @@
     <br />
     <div class="row">
 
-        <div class="col-md-12 col-sm-12 col-lg-12 form-inline">
+        <div class="col-md-12 col-sm-12 col-lg-12 form-inline text-center">
             <div class="form-group">
                 <label for="txtRecency">Recency:</label>
                 <input id="txtRecency" type="text" class="form-control" placeholder="Recency" />
@@ -56,7 +56,7 @@
     </div>
 
 
-    <script src="Scripts/ChartJs/AppChart.js"></script>
+    <script src="Scripts/ChartJs/AppChart.js?v=1"></script>
 
     <script>
 

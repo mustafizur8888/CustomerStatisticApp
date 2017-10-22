@@ -88,6 +88,8 @@
     <Content Include="less\screen-reader.less" />
     <Content Include="less\stacked.less" />
     <Content Include="less\variables.less" />
+    <Content Include="Handler\ValidNNonValidHandler.ashx" />
+    <Content Include="Handler\GetProductValidNonvalidDataHandler.ashx" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -140,6 +142,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Validation.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -168,6 +171,13 @@
     <Compile Include="Handler\GetChartRegionNamehandler.ashx.cs">
       <DependentUpon>GetChartRegionNamehandler.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Handler\GetProductValidNonvalidDataHandler.ashx.cs">
+      <DependentUpon>GetProductValidNonvalidDataHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\ValidNNonValidHandler.ashx.cs">
+      <DependentUpon>ValidNNonValidHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Satisfation_Rate_Generation.aspx.cs">
       <DependentUpon>Satisfation_Rate_Generation.aspx</DependentUpon>
@@ -190,10 +200,16 @@
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
+    <Compile Include="Validation.aspx.cs">
+      <DependentUpon>Validation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Validation.aspx.designer.cs">
+      <DependentUpon>Validation.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj">
